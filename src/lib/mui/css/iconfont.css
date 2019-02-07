@@ -1,0 +1,104 @@
+@font-face {font-family: "iconfont";
+  src: url('../fonts/iconfont.ttf?t=1548588644636') format('truetype'); /* chrome, firefox, opera, Safari, Android, iOS 4.2+ */
+}
+
+.iconfont {
+  font-family: "iconfont" !important;
+  font-size: 16px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-warning:before {
+  content: "\e7b9";
+}
+
+.icon-details:before {
+  content: "\e630";
+}
+
+.icon-user:before {
+  content: "\e601";
+}
+
+.icon-setting:before {
+  content: "\e639";
+}
+
+.icon-order:before {
+  content: "\e641";
+}
+
+.icon-err:before {
+  content: "\e614";
+}
+
+.icon-toilet:before {
+  content: "\e6b7";
+}
+
+.icon-collect:before {
+  content: "\e658";
+}
+
+.icon-living:before {
+  content: "\e605";
+}
+
+.icon-group:before {
+  content: "\e68c";
+}
+
+.icon-scan:before {
+  content: "\e763";
+}
+
+.icon-bedroom:before {
+  content: "\e602";
+}
+
+.icon-pwd:before {
+  content: "\e60e";
+}
+
+.icon-res:before {
+  content: "\e61f";
+}
+
+.icon-gujia:before {
+  content: "\e66c";
+}
+
+.icon-trash:before {
+  content: "\e6af";
+}
+
+.icon-tips:before {
+  content: "\e60c";
+}
+
+.icon-right:before {
+  content: "\e610";
+}
+
+.icon-congratulation:before {
+  content: "\e8cf";
+}
+
+.icon-kitchen:before {
+  content: "\e64e";
+}
+
+.icon-case:before {
+  content: "\e615";
+}
+
+.icon-houseInfo:before {
+  content: "\e742";
+}
+
+.icon-phone:before {
+  content: "\e618";
+}
+
