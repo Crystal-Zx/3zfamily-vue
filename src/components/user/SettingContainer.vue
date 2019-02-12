@@ -1,12 +1,15 @@
 <template>
   <div class="app-setting">
     <div class="change_avatar">
+      <!-- https://jsonplaceholder.typicode.com/posts/ -->
       <el-upload
         class="avatar-uploader"
-        action="https://jsonplaceholder.typicode.com/posts/"
+        action="123"
+        :http-request="upload"
+        :headers="importHeaders"
         :show-file-list="false"
         name="upfile"
-        :on-success="handleAvatarSuccess"
+        :on-change="onchange"
         :before-upload="beforeAvatarUpload">
         <img v-if="avatarUrl" :src="avatarUrl" class="avatar">
         <i v-else class="el-icon-plus avatar-uploader-icon"></i>
@@ -16,7 +19,7 @@
           <span class="mui-icon iconfont icon-tips"></span>
           点击头像可更换头像喔~
         </p>
-        <!-- <button @click="isSuccess ? changeAvatar(avatarUrl) : avatarError()">保存头像</button> -->
+        <button @click="toSave()">保存头像</button>
          <!-- @click="isSuccess ? changeAvatar(avatarUrl) : avatarError()" -->
       </div>
     </div>
@@ -29,11 +32,11 @@ export default {
     return {
       // uid: this.$store.state.currentUser,
       avatarUrl: '',
-      isSuccess: false,
-      myHeader: {
-        'Content-Type': 'multipart/form-data',
-        'Access-Control-Allow-Origin': '*'
-      }
+      // isSuccess: false,
+      importHeaders: {
+        enctype:"multipart/form-data"
+      },
+      fd: {}
     };
   },
   // props: ['currentUser'],
@@ -47,13 +50,13 @@ export default {
           uid
         }
       }).then(result=>{
-        console.log(result);
-        result.data.avatar = "http://127.0.0.1:3000/" + result.data.avatar;
+        if(!result.data.avatar){
+          result.data.avatar = "http://127.0.0.1:3000/img/avatar/default.jpg";
+        }else{
+          result.data.avatar = "http://127.0.0.1:3000/" + result.data.avatar;
+        }
         this.avatarUrl = result.data.avatar;
       })
-    },
-    handleAvatarSuccess(res, file) {
-      this.avatarUrl = URL.createObjectURL(file.raw);
     },
     beforeAvatarUpload(file) {
       const isJPG = file.type === 'image/jpeg';
@@ -70,30 +73,54 @@ export default {
           iconClass: 'mui-icon iconfont icon-err'
         });
       }
-      if(isJPG && isLt2M){
-        
-      }
       return isJPG && isLt2M;
     },
-    // changeAvatar(file){
-    //   var url = '/user/changeAvatar';
-    //   let fd = new FormData();
-    //   fd.append('file',file);
-    //   console.log(file);
-    //   console.log(fd);
-    //   this.axios.post(url,this.qs.stringify({
-    //     // uid: this.$store.state.currentUser,
-    //     fd: fd
-    //   })).then(result=>{
-    //     console.log(result.data);
-    //   })
-    // },
-    // avatarError(){
-    //   this.toast({
-    //     message: '请先上传头像!',
-    //     iconClass: 'mui-icon iconfont icon-err'
-    //   });
-    // }
+    upload(params){
+      let fd = new FormData();
+      fd.append('uid',this.$store.state.currentUser);
+      fd.append('avatar',params.file);
+      this.fd = fd;
+      // var url = '/user/changeAvatar';
+      // this.axios.post(url,fd).then(result=>{
+      //   if(result.data.code == 1){
+      //     this.toast({
+      //       message: '更改头像成功！',
+      //       iconClass: 'mui-icon iconfont icon-congratulation'
+      //     });
+      //   }
+      // })
+    },
+    // 文件状态改变时的钩子，添加文件、上传成功和上传失败时都会被调用
+    // 当上传图片后，调用onchange方法，获取图片本地路径
+    onchange(file,fileList){
+      var _this = this;
+      // 获取input上传文件的DOM元素
+      var event = event || window.event;
+      // event.target.files可以选择多个文件，此处仅选一个
+      var file = event.target.files[0];
+      // 以上file对象只获取到了对文件的描述信息，但没有获得文件中的数据，而inputBox.value也只是保存的是文件的绝对路径。可以通过html5提供的FileReader读取到文件中的数据。
+      var reader = new FileReader(); 
+      // 读取文件内容，结果用data:url的字符串形式表示
+      // !注意：这是一步异步操作
+      reader.readAsDataURL(file);
+      //转base64
+      reader.onload = function(e) {
+        // 读取完成后，数据保存在对象的result属性中
+        _this.avatarUrl = e.target.result //将图片路径赋值给src
+      }
+    },
+    toSave(){
+      var url = '/user/changeAvatar';
+      this.axios.post(url,this.fd).then(result=>{
+        if(result.data.code == 1){
+          this.toast({
+            message: '更改头像成功！',
+            iconClass: 'mui-icon iconfont icon-congratulation'
+          });
+          this.$router.push('/personal');
+        }
+      })
+    }
   },
   created(){
     this.getUserInfo();

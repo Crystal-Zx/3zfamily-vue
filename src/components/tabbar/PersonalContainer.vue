@@ -80,6 +80,7 @@ export default {
       userInfo: []
     }
   },
+  inject: ['reload'],
   methods:{
     // 获取用户基本信息
     getUserInfo(){
@@ -90,7 +91,11 @@ export default {
           uid
         }
       }).then(result=>{
-        result.data.avatar = "http://127.0.0.1:3000/" + result.data.avatar;
+        if(!result.data.avatar){
+          result.data.avatar = "http://127.0.0.1:3000/img/avatar/default.jpg";
+        }else{
+          result.data.avatar = "http://127.0.0.1:3000/" + result.data.avatar;
+        }
         this.userInfo = result.data;
       })
     },
@@ -112,7 +117,7 @@ export default {
   },
   created(){
     this.height = window.innerHeight - 95;
-    this.getUserInfo(); 
+    this.getUserInfo();
   }
 }
 </script>
