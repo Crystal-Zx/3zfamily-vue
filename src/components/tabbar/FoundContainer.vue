@@ -68,7 +68,6 @@ export default {
     }
   },
   mounted(){
-    // console.log(window.innerHeight);
     // 设置滑动区域高度
     this.height = window.innerHeight - 130;
     this.loadPage('case_num');

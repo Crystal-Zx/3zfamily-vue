@@ -65,7 +65,6 @@ export default {
           uid
         }
       }).then(result=>{
-        console.log(result.data);
         if(!result.data.avatar){
           result.data.avatar = "http://127.0.0.1:3000/img/avatar/default.jpg";
         }else{

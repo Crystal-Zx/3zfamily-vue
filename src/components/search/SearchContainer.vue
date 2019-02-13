@@ -79,8 +79,6 @@ export default {
   props: ['kw'],
   methods:{
     getResult(){
-      console.log(this.kw);
-      console.log(!this.kw);
       var url = '/com/search';
       this.axios.get(url,{
         params: {
@@ -99,7 +97,6 @@ export default {
           for(var c of this.caseList){
             c.case_img = 'http://127.0.0.1:3000/' + c.case_img;
           }
-          console.log(this.caseList);
         }
       })
     }

@@ -97,7 +97,6 @@ export default {
           result.data.avatar = "http://127.0.0.1:3000/" + result.data.avatar;
         }
         this.userInfo = result.data;
-        console.log(this.userInfo);
       })
     },
     // 退出登录

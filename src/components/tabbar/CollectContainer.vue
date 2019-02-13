@@ -41,7 +41,6 @@ export default {
           p.cicon_url = 'http://127.0.0.1:3000/' + p.cicon_url;
         }
         this.collectList = list;
-        console.log(this.collectList);
       })
     }
   },
