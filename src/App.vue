@@ -16,10 +16,10 @@
         <span class="mui-icon mui-icon-minus"></span>
         <span class="tab_name">发现</span>
       </mt-tab-item>
-      <mt-tab-item id="/order">
+      <mt-tab-item id="/collect">
         <!-- <img slot="icon" src=""> -->
         <span class="mui-icon mui-icon-star"></span>
-        <span class="tab_name">预约</span>
+        <span class="tab_name">收藏</span>
       </mt-tab-item>
       <mt-tab-item id="/personal">
         <!-- <img slot="icon" src=""> -->

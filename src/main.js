@@ -13,7 +13,8 @@ import 'mint-ui/lib/style.css'
 import MintUI from "mint-ui";
 Vue.use(MintUI);
 // 1.3 引入MintUI的toast方法作为全局的方法
-Vue.prototype.toast = MintUI.Toast;
+Vue.prototype.$toast = MintUI.Toast;
+Vue.prototype.$confirm = MintUI.MessageBox.confirm;
 
 // 2 MUI样式表的引入
 import './lib/mui/css/iconfont.css'
@@ -25,7 +26,7 @@ import './lib/mui/css/icons-extra.css';
 
 // 3 ElementUI组件按需引入
 // 头像上传
-import {Upload} from 'element-ui';
+import {Upload,MessageBox,Message} from 'element-ui';
 Vue.component(Upload.name,Upload);
 
 Vue.config.productionTip = false    // ?

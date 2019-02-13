@@ -13,28 +13,28 @@
     </div>
     <!-- 2.基本设置 -->
     <ul class="base_setting">
-      <li>
+      <li @click="toPath('/message')">
         <div>
           <span class="mui-icon mui-icon-email"></span>
           <span>我的消息</span>
         </div>
         <span class="mui-icon mui-icon-arrowright"></span>
       </li>
-      <li>
+      <li @click="toPath('/collection')">
         <div>
           <span class="mui-icon iconfont icon-collect"></span>
           <span>我的收藏</span>
         </div>
         <span class="mui-icon mui-icon-arrowright"></span>
       </li>
-      <li>
+      <li @click="toPath('/order')">
         <div>
           <span class="mui-icon mui-icon-phone"></span>
           <span>我的预约</span>
         </div>
         <span class="mui-icon mui-icon-arrowright"></span>
       </li>
-      <li>
+      <li @click="toPath('/artical')">
         <div>
           <span class="mui-icon mui-icon-compose"></span>
           <span>我的发表</span>
@@ -43,14 +43,14 @@
       </li>
     </ul>
     <ul class="base_setting">
-      <li>
+      <li @click="toPath('/scan')">
         <div>
           <span class="mui-icon iconfont icon-scan"></span>
           <span>扫一扫</span>
         </div>
         <span class="mui-icon mui-icon-arrowright"></span>
       </li>
-      <li>
+      <li @click="toPath('/gujia')">
         <div>
           <span class="mui-icon iconfont icon-gujia"></span>
           <span>房产估价</span>
@@ -97,6 +97,7 @@ export default {
           result.data.avatar = "http://127.0.0.1:3000/" + result.data.avatar;
         }
         this.userInfo = result.data;
+        console.log(this.userInfo);
       })
     },
     // 退出登录
@@ -104,15 +105,22 @@ export default {
       // 将user置为null，以清空vuex的state值和sessionStorage值
       this.$store.dispatch('setUser',null);
       // 注销成功提示
-      this.toast({
+      this.$toast({
         message: '退出登录成功！',
         iconClass: 'mui-icon iconfont icon-congratulation'
       })
       this.$router.push('/');
     },
-    // 路由带参(当前用户uid)跳转
+    // 路由跳转
     toPath(path){
-      this.$router.push(path);
+      if(path == '/setting')
+        this.$router.push(path);
+      else{
+        this.$toast({
+          message: '抱歉，该功能暂未开通！',
+          iconClass: 'mui-icon iconfont icon-err'
+        })
+      }
     }
   },
   created(){

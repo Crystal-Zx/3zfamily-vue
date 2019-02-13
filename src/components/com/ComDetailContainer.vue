@@ -155,7 +155,40 @@ export default {
       })
     },
     toCollect(){
-      this.isCollected = !this.isCollected;
+      // this.isCollected = !this.isCollected;
+      var msg = this.isCollected ? '确定将此公司从收藏列表删除？':'确定将此公司加入收藏列表？';
+      this.$confirm(msg)
+      .then((action)=>{
+        if(action === 'confirm'){
+          this.axios.get('/user/collect',{
+            params:{ cid:this.cid,uid: this.$store.state.currentUser}
+          }).then(result=>{
+            // 收藏成功
+            if(result.data.code == 1){
+              this.isCollected = true;
+              this.$toast({
+                message: result.data.msg,
+                iconClass: 'mui-icon iconfont icon-congratulation'
+              })
+            }else if(result.data.code == 2){
+              this.isCollected = false;
+              this.$toast({
+                message: result.data.msg,
+                iconClass: 'mui-icon iconfont icon-congratulation'
+              })
+            }else{
+              this.$toast({
+                message: result.data.msg,
+                iconClass: 'mui-icon iconfont icon-err'
+              })
+            }
+          }) 
+        }
+      }).catch(err=>{
+        if(err === 'cancel'){
+          return;
+        }
+      })
     },
     toOrder(){
       this.isOrder = !this.isOrder;
@@ -164,12 +197,27 @@ export default {
       var case_id = e;
       var url = `/case/${case_id}`;
       this.$router.push(url);
+    },
+    getCollected(){
+      this.axios.get('/user/isCollected',{
+        params:{
+          cid: this.cid,
+          uid: this.$store.state.currentUser
+        }
+      }).then(result=>{
+        if(result.data.code){
+          this.isCollected = true;
+        }else{
+          this.isCollected = false;
+        }
+      })
     }
   },
   created(){
     this.getCom();
     this.getDesigner();
     this.getCase();
+    this.getCollected();
   },
   components:{
     "err": Err

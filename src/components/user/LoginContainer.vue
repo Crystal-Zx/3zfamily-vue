@@ -15,7 +15,7 @@
         <div class="upwd_box">
           <div class="upwd_info">
             <span class="mui-icon iconfont icon-pwd"></span>
-            <input type="text" name="upwd" placeholder="请输入密码" v-model="upwd">
+            <input type="password" name="upwd" placeholder="请输入密码" v-model="upwd">
           </div>
           <!-- <div class="upwd_verify">
             <span class="warning mui-icon iconfont icon-warning"></span>
@@ -48,7 +48,7 @@
         <div class="upwd_box">
           <div class="upwd_info">
             <span class="mui-icon iconfont icon-pwd"></span>
-            <input type="text" name="upwd" placeholder="请输入密码" v-model="regPwd" @blur="toVerify(2)">
+            <input type="password" name="upwd" placeholder="请输入密码" v-model="regPwd" @blur="toVerify(2)">
           </div>
           <div class="upwd_verify" v-show="verifyRes[2]!=-1">
             <span class="warning mui-icon iconfont icon-warning" v-if="verifyRes[2]==0"></span>
@@ -58,7 +58,7 @@
         <div class="upwd_box upwd_box_again">
           <div class="upwd_info">
             <span class="mui-icon iconfont icon-pwd"></span>
-            <input type="text" name="upwd_again" placeholder="请再次输入密码" v-model="regPwdAgain" @blur="toVerify(3)">
+            <input type="password" name="upwd_again" placeholder="请再次输入密码" v-model="regPwdAgain" @blur="toVerify(3)">
           </div>
           <div class="upwd_verify" v-show="verifyRes[3]!=-1">
             <span class="warning mui-icon iconfont icon-warning" v-if="verifyRes[3]==0"></span>
@@ -172,7 +172,7 @@ export default {
               // 再次初始化相关数据
               this.initReg();
               // 进行提示
-              this.toast({
+              this.$toast({
                 message: '注册成功！',
                 iconClass: 'mui-icon iconfont icon-congratulation'
               });
@@ -181,7 +181,7 @@ export default {
             }
           })
         }else{
-          this.toast({
+          this.$toast({
             message: '您的注册信息有误，请更正！',
             iconClass: 'mui-icon iconfont icon-err'
           })
@@ -201,7 +201,7 @@ export default {
         })).then(result=>{
           if(result.data.code == 1){
             // 提示用户登录成功
-            this.toast({
+            this.$toast({
               message: '登陆成功！',
               iconClass: 'mui-icon iconfont icon-congratulation'
             });
@@ -217,7 +217,7 @@ export default {
             var redirect = this.$route.query.redirect;
             this.$router.push(redirect);
           }else{
-            this.toast({
+            this.$toast({
               message: '登陆失败！',
               iconClass: 'mui-icon iconfont icon-err'
             })

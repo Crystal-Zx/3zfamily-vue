@@ -23,6 +23,20 @@
          <!-- @click="isSuccess ? changeAvatar(avatarUrl) : avatarError()" -->
       </div>
     </div>
+    <ul class="user_info">
+      <li>
+        <span>电话：</span>
+        <span class="phone" v-text="userInfo.phone"></span>
+      </li>
+      <li class="uname">
+        <span>用户名：</span>
+        <span class="uname" v-text="userInfo.uname"></span>
+      </li>
+      <li class="changePwd">
+        <span>修改密码</span>
+        <span class="mui-icon mui-icon-arrowright"></span>
+      </li>
+    </ul>
   </div>
 </template>
 
@@ -36,7 +50,8 @@ export default {
       importHeaders: {
         enctype:"multipart/form-data"
       },
-      fd: {}
+      fd: {},
+      userInfo: {}
     };
   },
   // props: ['currentUser'],
@@ -50,25 +65,27 @@ export default {
           uid
         }
       }).then(result=>{
+        console.log(result.data);
         if(!result.data.avatar){
           result.data.avatar = "http://127.0.0.1:3000/img/avatar/default.jpg";
         }else{
           result.data.avatar = "http://127.0.0.1:3000/" + result.data.avatar;
         }
         this.avatarUrl = result.data.avatar;
+        this.userInfo = result.data;
       })
     },
     beforeAvatarUpload(file) {
       const isJPG = file.type === 'image/jpeg';
       const isLt2M = file.size / 1024 / 1024 < 2;
       if (!isJPG) {
-        this.toast({
+        this.$toast({
           message: '上传头像图片只能是 JPG 格式!',
           iconClass: 'mui-icon iconfont icon-err'
         });
       }
       if (!isLt2M) {
-        this.toast({
+        this.$toast({
           message: '上传头像图片大小不能超过 2MB!',
           iconClass: 'mui-icon iconfont icon-err'
         });
@@ -113,7 +130,7 @@ export default {
       var url = '/user/changeAvatar';
       this.axios.post(url,this.fd).then(result=>{
         if(result.data.code == 1){
-          this.toast({
+          this.$toast({
             message: '更改头像成功！',
             iconClass: 'mui-icon iconfont icon-congratulation'
           });
@@ -189,6 +206,23 @@ export default {
         color: white;
         border: 0;
       }
+    }
+  }
+  // 用户详细信息
+  .app-setting .user_info{
+    background: white;
+    list-style: none;
+    padding: 0;
+    li{
+      display: flex;
+      align-items: center;
+      margin: 0 20px;
+      padding: 10px 0;
+      border-bottom: 1px dotted #999;;
+      justify-content: space-between;
+    }
+    li:last-child{
+      border: 0;
     }
   }
 </style>
