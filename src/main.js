@@ -26,7 +26,7 @@ import './lib/mui/css/icons-extra.css';
 
 // 3 ElementUI组件按需引入
 // 头像上传
-import {Upload,MessageBox,Message} from 'element-ui';
+import {Upload} from 'element-ui';
 Vue.component(Upload.name,Upload);
 
 Vue.config.productionTip = false    // ?
